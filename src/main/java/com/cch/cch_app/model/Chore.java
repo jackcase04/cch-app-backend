@@ -6,9 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import lombok.Getter;
 
 @Entity
 @Table(name="chores")
+@Getter
 public class Chore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

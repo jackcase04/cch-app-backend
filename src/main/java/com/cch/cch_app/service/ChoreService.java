@@ -18,6 +18,7 @@ public class ChoreService {
     }
 
     public List<Chore> getChores() {
+        System.out.println("Made it here.");
         return choreRepository.findAll();
     }
 

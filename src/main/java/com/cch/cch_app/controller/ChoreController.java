@@ -2,6 +2,7 @@ package com.cch.cch_app.controller;
 
 import com.cch.cch_app.service.ChoreService;
 import com.cch.cch_app.model.Chore;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/chores")
@@ -22,6 +24,7 @@ public class ChoreController {
 
     @GetMapping
     public List<Chore> getChores(
+
         @RequestParam(required = false) String name,
         @RequestParam(required = false) String date){
 
@@ -30,6 +33,7 @@ public class ChoreController {
         } else if (name != null) {
             return choreService.getChoresFromName(name);
         } else {
+            System.out.println("Made it here.");
             return choreService.getChores();
         }
     }
