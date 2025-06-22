@@ -1,11 +1,13 @@
 package com.cch.cch_app.controller;
 
 import com.cch.cch_app.responses.LoginResponse;
+import com.cch.cch_app.responses.ErrorResponse;
 import com.cch.cch_app.service.AuthenticationService;
 import com.cch.cch_app.service.JwtService;
 import com.cch.cch_app.model.User;
 import com.cch.cch_app.dto.LoginUserDto;
 import com.cch.cch_app.dto.RegisterUserDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +26,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
-
-        return ResponseEntity.ok(registeredUser);
+    public ResponseEntity<?> register(@RequestBody RegisterUserDto dto) {
+        // we need to make sure name exists
+        User user = authenticationService.signup(dto);
+        if (user.getFull_name() != null) {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(user);
+        } else {
+            ErrorResponse err = new ErrorResponse("Name not found in valid names");
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(err);
+        }
     }
 
     @PostMapping("/login")
