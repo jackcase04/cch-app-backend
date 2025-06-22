@@ -12,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
+
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
@@ -53,41 +55,14 @@ public class AuthenticationService {
         User user = userRepository.findByUsername(input.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.isEnabled()) {
-            throw new RuntimeException("Account not verified, please verify");
-        }
-
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         input.getUsername(),
                         input.getPassword()
                 )
         );
+
         return user;
     }
-
-//    public void verifyUser(VerifyUserDto input) {
-//        Optional<User> optionalUser = userRepository.findByUsername(input.getUsername());
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//
-//            // This logic can pretty much be thrown out because we won't be doing verification codes.
-//            if (user.getVerificationCodeExpired().isBefore(LocalDateTime.now())) {
-//                throw new RuntimeException("Verification code has expired");
-//            }
-//
-//            if (user.getVerificationCode().equals(input.getVerificationCode())) {
-//                user.setEnabled(true);
-//                user.setVerificationCode(null);
-//                user.setVerificationCodeExpired(null);
-//                userRepository.save(user);
-//            } else {
-//                throw new RuntimeException("Invalid Verification Code");
-//            }
-//        } else {
-//            throw new RuntimeException("User not found");
-//        }
-//    }
-
 
 }
