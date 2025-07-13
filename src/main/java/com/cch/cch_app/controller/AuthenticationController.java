@@ -1,5 +1,8 @@
 package com.cch.cch_app.controller;
 
+import com.cch.cch_app.exception.NameAlreadyRegisteredException;
+import com.cch.cch_app.exception.NameNotAllowedException;
+import com.cch.cch_app.exception.InvalidLoginException;
 import com.cch.cch_app.responses.LoginResponse;
 import com.cch.cch_app.responses.ErrorResponse;
 import com.cch.cch_app.service.AuthenticationService;
@@ -27,19 +30,20 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody RegisterUserDto dto) {
-        // we need to make sure name exists
-        User user = authenticationService.signup(dto);
-        if (user.getFull_name() != null) {
+        try {
+            User user = authenticationService.signup(dto);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(user);
-        } else {
-            ErrorResponse err = new ErrorResponse("Name not found in valid names");
+        } catch (NameNotAllowedException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(e.getMessage()));
+        } catch (NameAlreadyRegisteredException e) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(err);
+                    .body(new ErrorResponse(e.getMessage()));
         }
-        // If we get a 403 forbidden, it means the response is incorrect
     }
 
     @PostMapping("/login")
@@ -49,8 +53,10 @@ public class AuthenticationController {
             String jwtToken = jwtService.generateToken(authenticatedUser);
             LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
             return ResponseEntity.ok(loginResponse);
-        } catch (RuntimeException e) {
-            return ResponseEntity.ok(new ErrorResponse("Invalid username and password combination"));
+        } catch (InvalidLoginException e) {
+            return ResponseEntity.
+                    status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse(e.getMessage()));
         }
 
     }

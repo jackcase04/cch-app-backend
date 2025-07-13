@@ -1,6 +1,8 @@
 package com.cch.cch_app.service;
 
-import com.cch.cch_app.model.Name;
+import com.cch.cch_app.exception.NameAlreadyRegisteredException;
+import com.cch.cch_app.exception.NameNotAllowedException;
+import com.cch.cch_app.exception.InvalidLoginException;
 import com.cch.cch_app.model.User;
 import com.cch.cch_app.repository.NameRepository;
 import com.cch.cch_app.repository.UserRepository;
@@ -9,10 +11,9 @@ import com.cch.cch_app.dto.RegisterUserDto;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.naming.AuthenticationException;
 
 @Service
 public class AuthenticationService {
@@ -37,30 +38,37 @@ public class AuthenticationService {
     }
 
     public User signup(RegisterUserDto input) {
-        // Here we need to check if the full name provided in input corresponds to a name in the name repository
-        if (nameRepository.findByName(input.getFull_name()) != null) {
-            System.out.println("Name found in name repo, allow linking of user");
 
-            User user = new User(input.getFull_name(), input.getUsername(), passwordEncoder.encode(input.getPassword()));
-            user.setEnabled(true);
-
-            return userRepository.save(user);
-        } else {
-            System.out.println("Provided name not found in allowed names");
-            return new User();
+        if (nameRepository.findByName(input.getFull_name()) == null) {
+            System.out.println("Name not found in allowed names list");
+            throw new NameNotAllowedException("Name not found in allowed names list");
         }
+
+        if (userRepository.findByFullname(input.getFull_name()) != null) {
+            System.out.println("Name already registered by another user");
+            throw new NameAlreadyRegisteredException("Name already registered by another user");
+        }
+
+        User user = new User(input.getFull_name(), input.getUsername(), passwordEncoder.encode(input.getPassword()));
+        user.setEnabled(true);
+
+        return userRepository.save(user);
     }
 
     public User authenticate(LoginUserDto input) {
         User user = userRepository.findByUsername(input.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new InvalidLoginException("Invalid username or password"));
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        input.getUsername(),
-                        input.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            input.getUsername(),
+                            input.getPassword()
+                    )
+            );
+        } catch (AuthenticationException e) {
+            throw new InvalidLoginException("Invalid username or password");
+        }
 
         return user;
     }

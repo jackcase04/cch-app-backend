@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private long id;
 
     @Column(unique = true, nullable = false)
-    private String full_name;
+    private String fullname;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -28,14 +28,14 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private String expo_push_token;
+    private String expopushtoken;
 
     private java.time.LocalTime reminderTime;
 
     private boolean enabled;
 
-    public User(String full_name, String username, String password) {
-        this.full_name = full_name;
+    public User(String fullname, String username, String password) {
+        this.fullname = fullname;
         this.username = username;
         this.password = password;
     }
