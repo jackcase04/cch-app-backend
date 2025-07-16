@@ -3,7 +3,7 @@ package com.cch.cch_app.controller;
 import com.cch.cch_app.exception.NameAlreadyRegisteredException;
 import com.cch.cch_app.exception.NameNotAllowedException;
 import com.cch.cch_app.exception.InvalidLoginException;
-import com.cch.cch_app.responses.LoginResponse;
+import com.cch.cch_app.responses.AuthResponse;
 import com.cch.cch_app.responses.ErrorResponse;
 import com.cch.cch_app.service.AuthenticationService;
 import com.cch.cch_app.service.JwtService;
@@ -32,9 +32,13 @@ public class AuthenticationController {
     public ResponseEntity<?> register(@RequestBody RegisterUserDto dto) {
         try {
             User user = authenticationService.signup(dto);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(user);
+            String jwtToken = jwtService.generateToken(user);
+            AuthResponse authResponse = new AuthResponse(user.getFullname(), user.getUsername(), jwtToken, jwtService.getExpirationTime());
+            return ResponseEntity.ok(authResponse);
+        } catch (InvalidLoginException e) {
+            return ResponseEntity.
+                    status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse(e.getMessage()));
         } catch (NameNotAllowedException e) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -51,8 +55,8 @@ public class AuthenticationController {
         try {
             User authenticatedUser = authenticationService.authenticate(loginUserDto);
             String jwtToken = jwtService.generateToken(authenticatedUser);
-            LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
-            return ResponseEntity.ok(loginResponse);
+            AuthResponse authResponse = new AuthResponse(authenticatedUser.getFullname(), authenticatedUser.getUsername(), jwtToken, jwtService.getExpirationTime());
+            return ResponseEntity.ok(authResponse);
         } catch (InvalidLoginException e) {
             return ResponseEntity.
                     status(HttpStatus.UNAUTHORIZED)

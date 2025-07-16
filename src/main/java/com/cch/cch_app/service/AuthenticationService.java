@@ -37,6 +37,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
+    // Signup functionality signs up the user and logs them in for simplicity
     public User signup(RegisterUserDto input) {
 
         if (nameRepository.findByName(input.getFull_name()) == null) {
@@ -52,7 +53,9 @@ public class AuthenticationService {
         User user = new User(input.getFull_name(), input.getUsername(), passwordEncoder.encode(input.getPassword()));
         user.setEnabled(true);
 
-        return userRepository.save(user);
+        userRepository.save(user);
+        LoginUserDto newUser = new LoginUserDto(input.getUsername(), input.getPassword());
+        return authenticate(newUser);
     }
 
     public User authenticate(LoginUserDto input) {
