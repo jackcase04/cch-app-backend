@@ -6,10 +6,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginResponse {
+    private String fullname;
     private String token;
     private long expiresIn;
 
-    public LoginResponse(String token, long expiresIn) {
+    public LoginResponse(String fullname, String token, long expiresIn) {
+        this.fullname = fullname;
         this.token = token;
         this.expiresIn = expiresIn;
     }

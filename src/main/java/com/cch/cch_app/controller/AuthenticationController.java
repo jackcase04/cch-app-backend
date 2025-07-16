@@ -51,7 +51,7 @@ public class AuthenticationController {
         try {
             User authenticatedUser = authenticationService.authenticate(loginUserDto);
             String jwtToken = jwtService.generateToken(authenticatedUser);
-            LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
+            LoginResponse loginResponse = new LoginResponse(authenticatedUser.getFullname(), jwtToken, jwtService.getExpirationTime());
             return ResponseEntity.ok(loginResponse);
         } catch (InvalidLoginException e) {
             return ResponseEntity.
