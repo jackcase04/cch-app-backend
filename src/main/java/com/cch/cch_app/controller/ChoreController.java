@@ -1,9 +1,13 @@
 package com.cch.cch_app.controller;
 
+import com.cch.cch_app.exception.NoChoreException;
+import com.cch.cch_app.responses.ErrorResponse;
 import com.cch.cch_app.service.ChoreService;
 import com.cch.cch_app.model.Chore;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,18 +27,25 @@ public class ChoreController {
     }
 
     @GetMapping
-    public List<Chore> getChores(
+    public ResponseEntity<?> getChores(
 
         @RequestParam(required = false) String name,
         @RequestParam(required = false) String date){
 
-        if (name != null && date != null) {
-            return choreService.getChoresByNameAndDate(name, date);
-        } else if (name != null) {
-            return choreService.getChoresFromName(name);
-        } else {
-            System.out.println("Made it here.");
-            return choreService.getChores();
+        try {
+            if (name != null && date != null) {
+                return ResponseEntity
+                        .ok(choreService.getChoresByNameAndDate(name, date));
+            } else if (name != null) {
+                return ResponseEntity
+                        .ok(choreService.getChoresFromName(name));
+            } else {
+                return ResponseEntity
+                        .ok(choreService.getChores());
+            }
+        } catch (NoChoreException e) {
+            return ResponseEntity
+                    .ok(new ErrorResponse(e.getMessage()));
         }
     }
 }
