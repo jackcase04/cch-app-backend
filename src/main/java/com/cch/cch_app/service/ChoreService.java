@@ -18,7 +18,13 @@ public class ChoreService {
     }
 
     public List<Chore> getChores() {
-        return choreRepository.findAll();
+        List<Chore> chores = choreRepository.findAll();
+
+        if (chores.isEmpty()) {
+            throw new NoChoreException("No chores returned");
+        }
+
+        return chores;
     }
 
     public List<Chore> getChoresFromName(String name) {
