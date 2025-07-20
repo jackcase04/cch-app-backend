@@ -33,6 +33,7 @@ target/
 *.ipr
 
 .env
+HELP.md
 
 # Windows Zone.Identifier files
 *:Zone.Identifier
