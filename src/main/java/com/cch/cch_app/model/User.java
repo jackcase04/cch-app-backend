@@ -40,6 +40,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public User(String fullname, String username, String password, java.time.LocalTime reminderTime) {
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.reminderTime = reminderTime;
+    }
+
     public User() {
 
     }

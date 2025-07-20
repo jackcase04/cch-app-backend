@@ -35,8 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
-    // TODO: Add explicit error checking and reporting here.
-    //  this causes API to silently fail with invalid JWT and caused hours of suffering
     @Override
     protected void doFilterInternal (
             @NonNull HttpServletRequest request,
@@ -74,12 +72,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
-            System.out.println("Invalid JWT: " + exception.getMessage());
+            sendErrorResponse(response, "Invalid Token");
+        }
+    }
+
+    private void sendErrorResponse(HttpServletResponse response, String message) {
+        try {
+            System.out.println("Invalid Auth");
 
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write("{\"error\":\"Invalid token\"}");
+            response.getWriter().write("{\"error\":\"" + message + "\"}");
             response.getWriter().flush();
+        } catch (IOException except) {
+            System.out.println("IO exception from sendErrorResponse: " + except.getMessage());
         }
+
     }
 }
