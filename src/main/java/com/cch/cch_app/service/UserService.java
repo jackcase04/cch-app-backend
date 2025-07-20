@@ -5,6 +5,7 @@ import com.cch.cch_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,18 @@ public class UserService {
     }
 
     public void setUserReminder(User user, String time) {
-        LocalTime test = LocalTime.now();
-        System.out.println("Current local time: " + test);
-        System.out.println("Reminder time is provided in format: " + time);
+        if (!time.equals("reset")) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
+            LocalTime realtime = LocalTime.parse(time, formatter);
 
-        user.setReminderTime(test);
-        userRepository.save(user);
+            System.out.println("Parsed reminder time: " + realtime);
+
+            user.setReminderTime(realtime);
+            userRepository.save(user);
+        } else {
+            user.setReminderTime(null);
+            userRepository.save(user);
+        }
+
     }
 }
