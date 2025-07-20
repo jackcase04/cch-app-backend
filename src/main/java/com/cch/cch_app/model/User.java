@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,13 +39,6 @@ public class User implements UserDetails {
         this.fullname = fullname;
         this.username = username;
         this.password = password;
-    }
-
-    public User(String fullname, String username, String password, java.time.LocalTime reminderTime) {
-        this.fullname = fullname;
-        this.username = username;
-        this.password = password;
-        this.reminderTime = reminderTime;
     }
 
     public User() {

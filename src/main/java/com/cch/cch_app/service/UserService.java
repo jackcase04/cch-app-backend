@@ -4,6 +4,7 @@ import com.cch.cch_app.model.User;
 import com.cch.cch_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,5 +22,12 @@ public class UserService {
         return users;
     }
 
+    public void setUserReminder(User user, String time) {
+        LocalTime test = LocalTime.now();
+        System.out.println("Current local time: " + test);
+        System.out.println("Reminder time is provided in format: " + time);
 
+        user.setReminderTime(test);
+        userRepository.save(user);
+    }
 }
