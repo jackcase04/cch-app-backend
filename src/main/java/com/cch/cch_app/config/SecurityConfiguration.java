@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize-> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/names/**").permitAll()
+                        .requestMatchers("/users/logout/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

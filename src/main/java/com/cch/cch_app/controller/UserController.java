@@ -1,6 +1,7 @@
 package com.cch.cch_app.controller;
 
 import com.cch.cch_app.model.User;
+import com.cch.cch_app.responses.LogoutResponse;
 import com.cch.cch_app.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,5 +29,14 @@ public class UserController {
 
         userService.setUserReminder(currentUser, time);
         return ResponseEntity.ok(currentUser);
+    }
+
+    @PutMapping("/logout")
+    public ResponseEntity<?> logoutUser(
+            @RequestParam(required = true) String username
+    ) {
+        userService.logoutUser(username);
+
+        return ResponseEntity.ok(new LogoutResponse("logout successfull"));
     }
 }

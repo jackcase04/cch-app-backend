@@ -1,6 +1,7 @@
 package com.cch.cch_app.config;
 
 import com.cch.cch_app.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,6 +72,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
+        } catch (ExpiredJwtException e) {
+            sendErrorResponse(response, "JWT token has expired");
         } catch (Exception exception) {
             sendErrorResponse(response, "Invalid Token");
         }

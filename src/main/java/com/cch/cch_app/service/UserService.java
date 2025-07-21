@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -36,6 +37,12 @@ public class UserService {
             user.setReminderTime(null);
             userRepository.save(user);
         }
+    }
 
+    public void logoutUser(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+
+        user.orElseThrow().setReminderTime(null);
+        userRepository.save(user.orElseThrow());
     }
 }
