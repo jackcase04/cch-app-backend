@@ -6,6 +6,7 @@ import com.cch.cch_app.model.Chore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -37,13 +38,13 @@ public class ChoreService {
         return chores;
     }
 
-    public List<Chore> getChoresByNameAndDate(String name, String date) {
-        List<Chore> chores = choreRepository.findByNameAndDate(name, date);
+    public Chore getChoresByNameAndDate(String name, LocalDate date) {
+        Chore chore = choreRepository.findByNameAndDate(name, date);
 
-        if (chores.isEmpty()) {
+        if (chore == null) {
             throw new NoChoreException("No chores for that name today");
         }
 
-        return chores;
+        return chore;
     }
 }

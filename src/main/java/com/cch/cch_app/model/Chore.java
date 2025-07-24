@@ -8,6 +8,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name="chores")
 @Getter
@@ -19,33 +21,17 @@ public class Chore {
     @Column(nullable = false)
     private String name;
     
-    private String date;
+    private LocalDate date;
 
     private String description;
 
     protected Chore() {}
 
-    public Chore(Long id, String name, String date, String description) {
+    public Chore(Long id, String name, LocalDate date, String description) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }
 
