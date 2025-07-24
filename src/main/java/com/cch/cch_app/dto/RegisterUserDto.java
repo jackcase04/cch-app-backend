@@ -9,4 +9,5 @@ public class RegisterUserDto {
     private String full_name;
     private String username;
     private String password;
+    private String expopushtoken;
 }

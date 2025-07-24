@@ -8,9 +8,11 @@ import lombok.Setter;
 public class LoginUserDto {
     private String username;
     private String password;
+    private String expopushtoken;
 
-    public LoginUserDto(String username, String password) {
+    public LoginUserDto(String username, String password, String expopushtoken) {
         this.username = username;
         this.password = password;
+        this.expopushtoken = expopushtoken;
     }
 }

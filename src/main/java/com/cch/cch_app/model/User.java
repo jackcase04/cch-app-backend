@@ -35,10 +35,11 @@ public class User implements UserDetails {
 
     private boolean enabled;
 
-    public User(String fullname, String username, String password) {
+    public User(String fullname, String username, String password, String expopushtoken) {
         this.fullname = fullname;
         this.username = username;
         this.password = password;
+        this.expopushtoken = expopushtoken;
     }
 
     public User() {

@@ -43,6 +43,8 @@ public class UserService {
         Optional<User> user = userRepository.findByUsername(username);
 
         user.orElseThrow().setReminderTime(null);
+        user.orElseThrow().setExpopushtoken(null);
+
         userRepository.save(user.orElseThrow());
     }
 }

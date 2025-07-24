@@ -50,17 +50,17 @@ public class AuthenticationService {
             throw new NameAlreadyRegisteredException("Name already registered by another user");
         }
 
-        User user = new User(input.getFull_name(), input.getUsername(), passwordEncoder.encode(input.getPassword()));
+        User user = new User(input.getFull_name(), input.getUsername(), passwordEncoder.encode(input.getPassword()), input.getExpopushtoken());
         user.setEnabled(true);
 
         userRepository.save(user);
-        LoginUserDto newUser = new LoginUserDto(input.getUsername(), input.getPassword());
+        LoginUserDto newUser = new LoginUserDto(input.getUsername(), input.getPassword(), input.getExpopushtoken());
         return authenticate(newUser);
     }
 
     public User authenticate(LoginUserDto input) {
         User user = userRepository.findByUsername(input.getUsername())
-                .orElseThrow(() -> new InvalidLoginException("Invalid username or password"));
+                .orElseThrow(() -> new InvalidLoginException("Invalid username or password init"));
 
         try {
             authenticationManager.authenticate(
@@ -69,6 +69,11 @@ public class AuthenticationService {
                             input.getPassword()
                     )
             );
+
+            user.setEnabled(true);
+            user.setExpopushtoken(input.getExpopushtoken());
+            userRepository.save(user);
+
         } catch (AuthenticationException e) {
             throw new InvalidLoginException("Invalid username or password");
         }
