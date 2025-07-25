@@ -36,5 +36,7 @@ target/
 HELP.md
 *.sql
 
+Dockerrun.aws.json
+
 # Windows Zone.Identifier files
 *:Zone.Identifier
