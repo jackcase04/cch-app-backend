@@ -30,7 +30,7 @@ public class NotificationsJob {
 
         List<User> users = userRepository.findByReminderTimeAndExpopushtokenIsNotNull(time);
 
-        System.out.println("Found " + users.size() + " users with reminder time at the time " + time);
+        System.out.println("Found " + users.size() + " users with reminder time at " + time);
 
         for (User user : users) {
             Chore chore = choreRepository.findByNameAndDate(user.getFullname(), LocalDate.now());
