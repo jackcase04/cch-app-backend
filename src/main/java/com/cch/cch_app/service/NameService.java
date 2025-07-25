@@ -17,7 +17,7 @@ public class NameService {
     }
 
     public List<Name> getNames() {
-        return nameRepository.findAll();
+        return nameRepository.findByAccountassociatedFalse();
     }
 }
 

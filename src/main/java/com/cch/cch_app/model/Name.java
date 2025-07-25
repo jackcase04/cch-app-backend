@@ -7,8 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name="names")
 public class Name {
@@ -19,11 +21,14 @@ public class Name {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "accountassociated")
+    private boolean accountassociated;
+
     protected Name() {}
 
     public Name(Long id, String name) {
         this.id = id;
         this.name = name;
+        this.accountassociated = false;
     }
-
 }

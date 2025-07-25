@@ -3,6 +3,7 @@ package com.cch.cch_app.service;
 import com.cch.cch_app.exception.NameAlreadyRegisteredException;
 import com.cch.cch_app.exception.NameNotAllowedException;
 import com.cch.cch_app.exception.InvalidLoginException;
+import com.cch.cch_app.model.Name;
 import com.cch.cch_app.model.User;
 import com.cch.cch_app.repository.NameRepository;
 import com.cch.cch_app.repository.UserRepository;
@@ -55,6 +56,11 @@ public class AuthenticationService {
 
         userRepository.save(user);
         LoginUserDto newUser = new LoginUserDto(input.getUsername(), input.getPassword(), input.getExpopushtoken());
+
+        Name name = nameRepository.findByName(input.getFull_name());
+        name.setAccountassociated(true);
+        nameRepository.save(name);
+
         return authenticate(newUser);
     }
 
