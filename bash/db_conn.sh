@@ -1,0 +1,1 @@
+docker exec -it cch-app-db-1 psql -U postgres -d choresdatabase
