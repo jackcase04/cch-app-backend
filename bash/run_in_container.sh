@@ -7,6 +7,12 @@ cleanup() {
 }
 trap cleanup EXIT
 
+if [ "$1" = "clean" ]; then
+    mvn clean package
+else
+    mvn package
+fi
+
 docker compose build app
 docker compose up -d
 
