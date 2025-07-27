@@ -66,7 +66,7 @@ public class AuthenticationService {
 
     public User authenticate(LoginUserDto input) {
         User user = userRepository.findByUsername(input.getUsername())
-                .orElseThrow(() -> new InvalidLoginException("Invalid username or password init"));
+                .orElseThrow(() -> new InvalidLoginException("Invalid username or password"));
 
         try {
             authenticationManager.authenticate(
