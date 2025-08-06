@@ -8,13 +8,9 @@ import lombok.Setter;
 public class AuthResponse {
     private String fullname;
     private String username;
-    private String token;
-    private long expiresIn;
 
-    public AuthResponse(String fullname, String username, String token, long expiresIn) {
+    public AuthResponse(String fullname, String username) {
         this.fullname = fullname;
         this.username = username;
-        this.token = token;
-        this.expiresIn = expiresIn;
     }
 }
