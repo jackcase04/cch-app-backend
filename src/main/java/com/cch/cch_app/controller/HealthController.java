@@ -13,6 +13,7 @@ public class HealthController {
 
     @GetMapping("/")
     public ResponseEntity<?> healthCheck() {
+
         return ResponseEntity.ok(Map.of("status", "ok"));
     }
 
