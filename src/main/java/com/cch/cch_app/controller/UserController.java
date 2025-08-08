@@ -22,10 +22,11 @@ public class UserController {
 
     @PutMapping("/reminder")
     public ResponseEntity<User> authenticatedUser(
-            @RequestParam(required = true) String time) {
+            @RequestParam(required = true) String time,
+            @RequestParam(required = true) String username
+    ) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) authentication.getPrincipal();
+        User currentUser = userService.findUserByName(username);
 
         userService.setUserReminder(currentUser, time);
         return ResponseEntity.ok(currentUser);

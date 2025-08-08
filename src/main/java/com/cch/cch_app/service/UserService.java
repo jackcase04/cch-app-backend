@@ -18,10 +18,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> allUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+    public User findUserByName(String name) {
+        return userRepository.findByFullname(name);
     }
 
     public void setUserReminder(User user, String time) {
