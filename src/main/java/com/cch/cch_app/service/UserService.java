@@ -1,5 +1,6 @@
 package com.cch.cch_app.service;
 
+import com.cch.cch_app.exception.NoUserException;
 import com.cch.cch_app.model.User;
 import com.cch.cch_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> allUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+    public User findUserByName(String name) {
+        User user = userRepository.findByFullname(name);
+
+        if (user == null) {
+            throw new NoUserException("User does not exist");
+        }
+
+        return user;
     }
 
     public void setUserReminder(User user, String time) {
