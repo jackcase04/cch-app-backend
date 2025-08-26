@@ -29,14 +29,14 @@ public class UserController {
     public ResponseEntity<?> getUser(
             @RequestParam(required = true) String fullname
     ) {
-        User user = userService.findUserByName(fullname);
-
         try {
+            User user = userService.findUserByName(fullname);
+
             return ResponseEntity.ok(user);
         } catch (NoUserException e) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 
