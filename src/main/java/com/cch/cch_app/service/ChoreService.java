@@ -19,7 +19,7 @@ public class ChoreService {
         Chore chore = choreRepository.findByNameAndDate(name, LocalDate.now());
 
         if (chore == null) {
-            throw new NoChoreException("No chores returned");
+            throw new NoChoreException("No chores for today!");
         }
 
         return chore;
