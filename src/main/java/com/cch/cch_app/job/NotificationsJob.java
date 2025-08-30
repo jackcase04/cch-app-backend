@@ -30,15 +30,11 @@ public class NotificationsJob {
 
         List<User> users = userRepository.findByReminderTimeAndExpopushtokenIsNotNull(time);
 
-        System.out.println("Found " + users.size() + " users with reminder time at " + time);
-
         for (User user : users) {
             Chore chore = choreRepository.findByNameAndDate(user.getFullname(), LocalDate.now());
             if (chore != null) {
                 System.out.println("Sending notification to " + user.getFullname());
                 notificationService.sendNotification("You have 1 chore today", chore.getDescription(), user.getExpopushtoken());
-            } else {
-                System.out.println("User " + user.getFullname() + " had reminder now but didn't have a chore");
             }
         }
     }

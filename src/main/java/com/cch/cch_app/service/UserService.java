@@ -34,8 +34,6 @@ public class UserService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
             LocalTime realtime = LocalTime.parse(time, formatter);
 
-            System.out.println("Parsed reminder time: " + realtime);
-
             user.setReminderTime(realtime);
             userRepository.save(user);
         } else {
