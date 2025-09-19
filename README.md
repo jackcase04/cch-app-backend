@@ -2,7 +2,7 @@
 
 This is the backend repo for the Christian Campus House chores reminder app. It manages chores and notifications for 64 residents, automating what was previously done manually with Excel.
 
-# Features
+## Features
 
 - RESTful API made with Java Spring Boot
 - User authentication
@@ -12,7 +12,7 @@ This is the backend repo for the Christian Campus House chores reminder app. It 
 - PostgreSQL database hosted on AWS RDS
 - CI/CD pipeline with GitHub Actions + Docker for automated builds and deployments
 
-# Technologies
+## Technologies
 
 - Language: Java
 - Framework: Spring Boot
@@ -20,13 +20,13 @@ This is the backend repo for the Christian Campus House chores reminder app. It 
 - Infrastructure: AWS Elastic Beanstalk, AWS RDS
 - CI/CD: GitHub Actions with Docker
 
-# Impact
+## Impact
 
 - 64 active users use the app daily in the Christian Campus House
 - Replaced a manual Excel-based system with automated chore tracking and notifications
 - Improved accountability and efficiency in house operations
 
-# Future Work
+## Future Work
 
 - [ ] Admin dashboard for chore/role management
 - [ ] Analytics on task completion
