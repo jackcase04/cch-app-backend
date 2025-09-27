@@ -26,6 +26,11 @@ This is the backend repo for the [Christian Campus House app](https://github.com
 - Replaced a manual Excel-based system with automated chore tracking and notifications
 - Improved accountability and efficiency in house operations
 
+## Design
+Database ER Diagram:  
+
+![ER Diagram](assets/CCHAppER.png)
+
 ## Future Work
 
 - [ ] Admin dashboard for chore/role management
