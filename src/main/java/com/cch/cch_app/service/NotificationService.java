@@ -6,6 +6,8 @@ import io.github.jav.exposerversdk.PushClient;
 import io.github.jav.exposerversdk.PushClientException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -43,6 +45,9 @@ public class NotificationService {
                 for (ExpoPushTicket ticket : tickets) {
                     System.out.println("Ticket ID: " + ticket.getId());
                     System.out.println("Status: " + ticket.getStatus());
+                    System.out.println("Time: " +
+                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a"))
+                    );
                     if (ticket.getDetails() != null && ticket.getDetails().getError() != null) {
                         System.err.println("Error: " + ticket.getDetails().getError());
                     }
