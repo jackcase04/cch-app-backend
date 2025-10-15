@@ -33,7 +33,7 @@ public class NotificationsJob {
         for (User user : users) {
             Chore chore = choreRepository.findByNameAndDate(user.getFullname(), LocalDate.now());
             if (chore != null) {
-                System.out.println("Sending notification to " + user.getFullname());
+                System.out.println("Sending notification to " + user.getFullname() + ":");
                 notificationService.sendNotification("You have 1 chore today", chore.getDescription(), user.getExpopushtoken());
             }
         }
