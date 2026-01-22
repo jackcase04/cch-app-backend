@@ -31,6 +31,8 @@ target/
 *.iws
 *.iml
 *.ipr
+**/JetBrains/
+**/terminal/history/
 
 .env
 HELP.md
@@ -40,3 +42,6 @@ Dockerrun.aws.json
 
 # Windows Zone.Identifier files
 *:Zone.Identifier
+
+# Weird WSL bug
+C:\\Users\\*
