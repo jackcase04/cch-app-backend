@@ -1,5 +1,4 @@
-## CCH App Backend ![Build Status](https://github.com/jackcase04/cch-app-backend/actions/workflows/deploy.yml/badge.svg)
-
+## CCH App Backend
 This is the backend repo for the [Christian Campus House app](https://github.com/jackcase04/cch-app-mobile) chores reminder app. It manages chores and notifications for 64 residents, automating what was previously done manually with Excel.
 
 ## Features

@@ -37,7 +37,7 @@ public class ApiKeyFilter implements Filter {
         String apiKey = httpRequest.getHeader("X-API-Key");
 
         if (!apiKeyValidator.isValidApiKey(apiKey)) {
-            sendErrorResponse(httpResponse, "Invalid API key");
+            sendErrorResponse(httpResponse, "Invalid API Key. Please provide a valid API key.");
             return;
         }
 
