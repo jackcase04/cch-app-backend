@@ -19,8 +19,6 @@ public class ChoreService {
     public Chore getChores(String name) {
         Chore chore = choreRepository.findByNameAndDate(name, LocalDate.now(ZoneId.of("America/Chicago")));
 
-        System.out.println(chore);
-
         if (chore == null) {
             throw new NoChoreException("No chores for today!");
         }

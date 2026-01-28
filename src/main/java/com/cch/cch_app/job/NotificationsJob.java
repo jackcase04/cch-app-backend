@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Component
@@ -26,7 +27,7 @@ public class NotificationsJob {
 
     @Scheduled(cron = "1 * * * * *")
     public void checkForChores() {
-        LocalTime time = LocalTime.now().withSecond(0).withNano(0);
+        LocalTime time = LocalTime.now(ZoneId.of("America/Chicago")).withSecond(0).withNano(0);
 
         List<User> users = userRepository.findByReminderTimeAndExpopushtokenIsNotNull(time);
 
