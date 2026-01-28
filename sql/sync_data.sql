@@ -1,5 +1,6 @@
 CREATE OR REPLACE PROCEDURE sync_data()
 LANGUAGE plpgsql
+SECURITY DEFINER
 AS $$
 BEGIN
   -- safety checks
