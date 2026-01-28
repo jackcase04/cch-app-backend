@@ -36,7 +36,7 @@ target/
 
 .env
 HELP.md
-*.sql
+/*.sql
 
 Dockerrun.aws.json
 
