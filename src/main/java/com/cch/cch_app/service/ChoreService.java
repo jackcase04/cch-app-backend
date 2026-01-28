@@ -6,6 +6,7 @@ import com.cch.cch_app.model.Chore;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Component
 public class ChoreService {
@@ -16,7 +17,9 @@ public class ChoreService {
     }
 
     public Chore getChores(String name) {
-        Chore chore = choreRepository.findByNameAndDate(name, LocalDate.now());
+        Chore chore = choreRepository.findByNameAndDate(name, LocalDate.now(ZoneId.of("America/Chicago")));
+
+        System.out.println(chore);
 
         if (chore == null) {
             throw new NoChoreException("No chores for today!");
